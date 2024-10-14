@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/resources')
 def resources():
     # Obtenir des informations sur l'utilisation du CPU, de la mémoire et du disque
-    cpu_usage = psutil.cpu_percent(interval=1)
+    cpu_usage = psutil.cpu_percent(interval=0.1)
     memory_info = psutil.virtual_memory()
     disk_usage = psutil.disk_usage('/')
 
