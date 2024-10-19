@@ -1,7 +1,15 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, abort
 import psutil
+from config import IP_MASTER
 
 app = Flask(__name__)
+AUTHORIZED_IPS = [IP_MASTER]
+
+@app.before_request
+def limit_remote_addr():
+    client_ip = request.remote_addr
+    if client_ip not in AUTHORIZED_IPS:
+        abort(403)  # Refuser l'accès avec un code 403 (Forbidden)
 
 @app.route('/resources')
 def resources():
