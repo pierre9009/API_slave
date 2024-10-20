@@ -1,1 +1,1 @@
-IP_MASTER="82.67.116.111"
+IP_MASTER="pierreminh.com"
