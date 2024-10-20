@@ -1,9 +1,16 @@
 from flask import Flask, jsonify, request, abort
 import psutil
-from config import IP_MASTER
+from config import IP_MASTER, LOCAL
+import socket
 
 app = Flask(__name__)
-AUTHORIZED_IPS = [IP_MASTER]
+
+try:
+    ip_master_resolved = socket.gethostbyname(IP_MASTER)
+    AUTHORIZED_IPS = [ip_master_resolved, LOCAL]
+except socket.gaierror:
+    print(f"Impossible de résoudre le nom de domaine {IP_MASTER}")
+    AUTHORIZED_IPS = [LOCAL]
 
 @app.before_request
 def limit_remote_addr():
